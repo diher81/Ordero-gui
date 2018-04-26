@@ -6,6 +6,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 
 import java.util.List;
 
@@ -32,21 +33,13 @@ public class ItemOverviewView extends CustomComponent implements View {
 
         this.headerLayout = new HorizontalLayout(items, itemFilter, btnFilter, btnNewItem);
         headerLayout.setSpacing(true);
+        headerLayout.setSizeFull();
         this.gridLayout = new HorizontalLayout(grid);
+        gridLayout.setSizeFull();
+        gridLayout.setExpandRatio(grid, 1);
         this.mainLayout = new VerticalLayout(headerLayout, gridLayout);
         mainLayout.setSpacing(true);
-
-//        itemResource.getItems()
-//                .forEach(item ->
-//                        mainLayout.addComponent(
-//                                new HorizontalLayout(
-//                                        new Label("--> " + item.name + " €" + item.price))));
-
-//        mainLayout.addComponent(
-//                new HorizontalLayout(
-//                        new Label("ITEMS:")
-//                )
-//        );
+        mainLayout.setMargin(true);
 
         setCompositionRoot(mainLayout);
     }
@@ -54,25 +47,33 @@ public class ItemOverviewView extends CustomComponent implements View {
     private Grid createGrid(ItemResource itemResource) {
         Grid grid = new Grid();
 
+        grid.setColumns("name", "description", "price", "amountOfStock");
+
+        grid.getColumn("name").setHeaderCaption("Name");
+        grid.getColumn("description").setHeaderCaption("Description");
+        grid.getColumn("price").setHeaderCaption("Price");
+        grid.getColumn("amountOfStock").setHeaderCaption("Amount of Stock");
+
         List<Item> itemList = itemResource.getItems();
 
         BeanItemContainer<Item> container =
                 new BeanItemContainer<>(Item.class, itemList);
 
-        grid.setColumns("name", "description");
-
         grid.setContainerDataSource(container);
+        grid.setSizeFull();
 
         return grid;
     }
 
     private Button createButtonNewItem() {
         Button btn = new Button("New Item");
+        btn.setStyleName(ValoTheme.BUTTON_DANGER);
         return btn;
     }
 
     private Button createButtonFilter() {
         Button btn = new Button("Filter");
+        btn.setStyleName(ValoTheme.BUTTON_FRIENDLY);
         return btn;
     }
 
@@ -83,7 +84,8 @@ public class ItemOverviewView extends CustomComponent implements View {
     }
 
     private Label createItemLabel() {
-        return new Label("Items");
+        Label label = new Label("Items");
+        return label;
     }
 
     @Override
