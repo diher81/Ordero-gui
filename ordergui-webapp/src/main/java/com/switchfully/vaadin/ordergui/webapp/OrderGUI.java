@@ -1,7 +1,10 @@
 package com.switchfully.vaadin.ordergui.webapp;
 
 import com.switchfully.vaadin.ordergui.interfaces.items.ItemResource;
+import com.switchfully.vaadin.ordergui.webapp.views.items.CreateItemView;
+import com.switchfully.vaadin.ordergui.webapp.views.items.ItemOverviewView;
 import com.vaadin.annotations.Theme;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.HorizontalLayout;
@@ -16,6 +19,13 @@ public class OrderGUI extends UI {
 
     private ItemResource itemResource;
 
+    private static final String VIEW_ITEM_OVERVIEW = "";
+    private static final String VIEW_ITEM_CREATE = "items";
+    // todo
+    //private static final String VIEW_ITEM_UPDATE = "update";
+
+    private Navigator navigator;
+
     @Autowired
     public OrderGUI(ItemResource itemResource) {
         this.itemResource = itemResource;
@@ -23,26 +33,10 @@ public class OrderGUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-        VerticalLayout mainLayout = new VerticalLayout();
-        addTitleLabel(mainLayout);
-        renderItems(mainLayout);
-        setContent(mainLayout);
-    }
+        navigator = new Navigator(this, this);
 
-    private void renderItems(VerticalLayout mainLayout) {
-        itemResource.getItems()
-                .forEach(item ->
-                        mainLayout.addComponent(
-                                new HorizontalLayout(
-                                        new Label("--> " + item.name + " €" + item.price))));
-    }
-
-    private void addTitleLabel(VerticalLayout mainLayout) {
-        mainLayout.addComponent(
-                new HorizontalLayout(
-                        new Label("ITEMS:")
-                )
-        );
+        navigator.addView(VIEW_ITEM_OVERVIEW, new ItemOverviewView(itemResource));
+        navigator.addView(VIEW_ITEM_CREATE, new CreateItemView());
     }
 
 }
