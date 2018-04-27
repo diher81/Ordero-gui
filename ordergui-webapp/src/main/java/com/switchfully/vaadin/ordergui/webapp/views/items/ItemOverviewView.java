@@ -2,6 +2,7 @@ package com.switchfully.vaadin.ordergui.webapp.views.items;
 
 import com.switchfully.vaadin.ordergui.interfaces.items.Item;
 import com.switchfully.vaadin.ordergui.interfaces.items.ItemResource;
+import com.switchfully.vaadin.ordergui.webapp.OrderGUI;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -68,6 +69,7 @@ public class ItemOverviewView extends CustomComponent implements View {
     private Button createButtonNewItem() {
         Button btn = new Button("New Item");
         btn.setStyleName(ValoTheme.BUTTON_DANGER);
+        btn.addClickListener(event -> getUI().getNavigator().navigateTo(OrderGUI.VIEW_ITEM_CREATE));
         return btn;
     }
 

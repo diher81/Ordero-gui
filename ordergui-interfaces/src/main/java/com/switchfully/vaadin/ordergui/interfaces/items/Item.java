@@ -8,6 +8,16 @@ public class Item {
     public int amountOfStock;
     public String stockUrgency;
 
+    public Item() {
+    }
+
+    public Item(String name, String description, float price, int amountOfStock) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.amountOfStock = amountOfStock;
+    }
+
     public String getId() {
         return id;
     }

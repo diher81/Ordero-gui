@@ -19,8 +19,8 @@ public class OrderGUI extends UI {
 
     private ItemResource itemResource;
 
-    private static final String VIEW_ITEM_OVERVIEW = "";
-    private static final String VIEW_ITEM_CREATE = "items";
+    public static final String VIEW_ITEM_OVERVIEW = "";
+    public static final String VIEW_ITEM_CREATE = "items";
     // todo
     //private static final String VIEW_ITEM_UPDATE = "update";
 
@@ -36,7 +36,7 @@ public class OrderGUI extends UI {
         navigator = new Navigator(this, this);
 
         navigator.addView(VIEW_ITEM_OVERVIEW, new ItemOverviewView(itemResource));
-        navigator.addView(VIEW_ITEM_CREATE, new CreateItemView());
+        navigator.addView(VIEW_ITEM_CREATE, new CreateItemView(itemResource));
     }
 
 }

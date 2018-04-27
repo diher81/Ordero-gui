@@ -1,6 +1,7 @@
 package com.switchfully.vaadin.ordergui.interfaces.items;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,5 +23,22 @@ public class ItemResource {
         return Arrays.asList(items);
     }
 
+    public Item saveItems(Item item) {
+        Item item1 = restTemplate.postForObject("http://localhost:9000/items", item, Item.class);
+        return item1;
 
+        //Alternative:
+//        HttpHeaders headers = new HttpHeaders();
+//
+//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        String url = "http://localhost:9000/items";
+//
+//        HttpEntity<Item> requestEntity = new HttpEntity<>(item, headers);
+//
+//        ResponseEntity<Item> exchange = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Item.class);
+//        exchange
+
+    }
 }
