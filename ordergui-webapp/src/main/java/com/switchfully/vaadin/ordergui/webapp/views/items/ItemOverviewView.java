@@ -4,9 +4,12 @@ import com.switchfully.vaadin.ordergui.interfaces.items.Item;
 import com.switchfully.vaadin.ordergui.interfaces.items.ItemResource;
 import com.switchfully.vaadin.ordergui.webapp.OrderGUI;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.GeneratedPropertyContainer;
+import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.util.List;
@@ -46,7 +49,34 @@ public class ItemOverviewView extends CustomComponent implements View {
     }
 
     private Grid createGrid(ItemResource itemResource) {
-        Grid grid = new Grid();
+
+        List<Item> itemList = itemResource.getItems();
+
+        BeanItemContainer<Item> container =
+                new BeanItemContainer<>(Item.class, itemList);
+
+        GeneratedPropertyContainer gpc =
+                new GeneratedPropertyContainer(container);
+
+        gpc.addGeneratedProperty("edit",
+                new PropertyValueGenerator<String>() {
+
+                    @Override
+                    public String getValue(com.vaadin.data.Item item, Object itemId, Object propertyId) {
+                        return "Edit"; // The caption
+                    }
+
+                    @Override
+                    public Class<String> getType() {
+                        return String.class;
+                    }
+                });
+
+
+        Grid grid = new Grid(gpc);
+
+        grid.getColumn("edit")
+                .setRenderer(new ButtonRenderer());
 
         grid.setColumns("name", "description", "price", "amountOfStock");
 
@@ -54,11 +84,6 @@ public class ItemOverviewView extends CustomComponent implements View {
         grid.getColumn("description").setHeaderCaption("Description");
         grid.getColumn("price").setHeaderCaption("Price");
         grid.getColumn("amountOfStock").setHeaderCaption("Amount of Stock");
-
-        List<Item> itemList = itemResource.getItems();
-
-        BeanItemContainer<Item> container =
-                new BeanItemContainer<>(Item.class, itemList);
 
         grid.setContainerDataSource(container);
         grid.setSizeFull();
