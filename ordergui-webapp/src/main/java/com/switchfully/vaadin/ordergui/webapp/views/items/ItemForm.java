@@ -3,7 +3,6 @@ package com.switchfully.vaadin.ordergui.webapp.views.items;
 import com.switchfully.vaadin.ordergui.interfaces.items.Item;
 import com.switchfully.vaadin.ordergui.interfaces.items.ItemResource;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.util.filter.Not;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
