@@ -47,4 +47,8 @@ public class ItemResource {
                 .findAny()
                 .orElse(null);
     }
+
+    public void updateItem(Item item){
+        restTemplate.put(String.format("http://localhost:9000/items/%s", item.getId()), item);
+    }
 }

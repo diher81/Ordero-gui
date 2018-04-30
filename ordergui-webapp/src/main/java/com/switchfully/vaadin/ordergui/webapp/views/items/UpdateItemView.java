@@ -12,7 +12,7 @@ public class UpdateItemView extends CustomComponent implements View {
     private final VerticalLayout mainLayout;
 
     private final Label newLabel;
-    private final FormLayout newItemForm;
+    private final ItemForm newItemForm;
 
     private Item item;
 
@@ -21,7 +21,7 @@ public class UpdateItemView extends CustomComponent implements View {
     public UpdateItemView(ItemResource itemResource) {
         this.itemResource = itemResource;
         this.newLabel = createNewLabel();
-        this.newItemForm = new ItemForm(itemResource);
+        this.newItemForm = new ItemForm(itemResource, "update");
 
         this.mainLayout = new VerticalLayout(newLabel, newItemForm);
 
@@ -32,9 +32,7 @@ public class UpdateItemView extends CustomComponent implements View {
     }
 
     private void init(String itemId){
-        this.item = Item.cloneItem(itemResource.getById(itemId));
-        BeanFieldGroup<Item> itemBeanFieldGroup = BeanFieldGroup.bindFieldsUnbuffered(this.item, this);
-        itemBeanFieldGroup.setItemDataSource(item);
+        newItemForm.setItem(itemId);
     }
 
     private Label createNewLabel() {

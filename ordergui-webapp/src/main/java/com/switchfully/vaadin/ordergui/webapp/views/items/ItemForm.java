@@ -17,6 +17,7 @@ public class ItemForm extends FormLayout {
     private HorizontalLayout buttons;
     private Button createBtn;
     private Button cancelBtn;
+    private Button updateBtn;
 
     private Item item;
     private BeanFieldGroup<Item> beanFieldGroup;
@@ -29,11 +30,39 @@ public class ItemForm extends FormLayout {
         this.amountOfStock = createAmountOfStockTxt();
         this.createBtn = createCreateBtn();
         this.cancelBtn = cancelCancelBtn();
+
         buttons = new HorizontalLayout(createBtn, cancelBtn);
+
         buttons.setSpacing(true);
         this.itemResource = itemResource;
 
         addComponents(name, description, price, amountOfStock, buttons);
+    }
+
+    public ItemForm(ItemResource itemResource, String originView){
+        this.name = createNameTxt();
+        this.description = createDescriptionTxt();
+        this.price = createPriceTxt();
+        this.amountOfStock = createAmountOfStockTxt();
+        this.cancelBtn = cancelCancelBtn();
+        this.updateBtn = createUpdateBtn();
+
+        buttons = new HorizontalLayout(updateBtn, cancelBtn);
+
+        buttons.setSpacing(true);
+        this.itemResource = itemResource;
+
+        addComponents(name, description, price, amountOfStock, buttons);
+    }
+
+    private Button createUpdateBtn() {
+        Button updateBtn = new Button("Update");
+        updateBtn.addClickListener(event -> updateItem());
+        return updateBtn;
+    }
+
+    private void updateItem() {
+        itemResource.updateItem(item);
     }
 
     private Button cancelCancelBtn() {
@@ -104,4 +133,10 @@ public class ItemForm extends FormLayout {
         this.item = new Item(name.getValue(), description.getValue(), Float.parseFloat(price.getValue()), Integer.parseInt(amountOfStock.getValue()));
         BeanFieldGroup.bindFieldsUnbuffered(this.item, this);
     }
+
+    public void setItem(String itemId) {
+        this.item = Item.cloneItem(itemResource.getById(itemId));
+        BeanFieldGroup.bindFieldsUnbuffered(this.item, this);
+    }
+
 }
