@@ -65,4 +65,10 @@ public class Item {
     public void setStockUrgency(String stockUrgency) {
         this.stockUrgency = stockUrgency;
     }
+
+    public static Item cloneItem(Item item) {
+        Item newItem = new Item(item.getName(), item.getDescription(), item.getPrice(), item.getAmountOfStock());
+        newItem.setId(item.getId());
+        return newItem;
+    }
 }

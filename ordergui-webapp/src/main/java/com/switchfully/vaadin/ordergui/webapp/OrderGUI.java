@@ -3,6 +3,7 @@ package com.switchfully.vaadin.ordergui.webapp;
 import com.switchfully.vaadin.ordergui.interfaces.items.ItemResource;
 import com.switchfully.vaadin.ordergui.webapp.views.items.CreateItemView;
 import com.switchfully.vaadin.ordergui.webapp.views.items.ItemOverviewView;
+import com.switchfully.vaadin.ordergui.webapp.views.items.UpdateItemView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
@@ -21,8 +22,7 @@ public class OrderGUI extends UI {
 
     public static final String VIEW_ITEM_OVERVIEW = "";
     public static final String VIEW_ITEM_CREATE = "items";
-    // todo
-    //private static final String VIEW_ITEM_UPDATE = "update";
+    public static final String VIEW_ITEM_UPDATE = "update";
 
     private Navigator navigator;
 
@@ -37,6 +37,7 @@ public class OrderGUI extends UI {
 
         navigator.addView(VIEW_ITEM_OVERVIEW, new ItemOverviewView(itemResource));
         navigator.addView(VIEW_ITEM_CREATE, new CreateItemView(itemResource));
+        navigator.addView(VIEW_ITEM_UPDATE, new UpdateItemView(itemResource));
     }
 
 }

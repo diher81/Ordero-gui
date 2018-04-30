@@ -3,15 +3,19 @@ package com.switchfully.vaadin.ordergui.webapp.views.items;
 import com.switchfully.vaadin.ordergui.interfaces.items.Item;
 import com.switchfully.vaadin.ordergui.interfaces.items.ItemResource;
 import com.switchfully.vaadin.ordergui.webapp.OrderGUI;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
+import com.vaadin.data.util.filter.Or;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.ButtonRenderer;
+import com.vaadin.ui.renderers.ClickableRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 
+import javax.swing.*;
 import java.util.List;
 
 public class ItemOverviewView extends CustomComponent implements View {
@@ -75,9 +79,11 @@ public class ItemOverviewView extends CustomComponent implements View {
         Grid grid = new Grid(gpc);
 
         grid.getColumn("editButton")
-                .setRenderer(new ButtonRenderer(e -> // Java 8
-                        grid.getContainerDataSource()
-                                .removeItem(e.getItemId())));
+                .setRenderer(new ButtonRenderer(e -> {
+                    BeanItem<Item> beanItem = container.getItem(e.getItemId());
+                    getUI().getNavigator().navigateTo(String.format("%s/%s", OrderGUI.VIEW_ITEM_UPDATE, beanItem.getBean().getId()));
+                }
+                ));
 
         grid.setColumns("name", "description", "price", "amountOfStock", "editButton");
 

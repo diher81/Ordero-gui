@@ -38,7 +38,13 @@ public class ItemResource {
 //        HttpEntity<Item> requestEntity = new HttpEntity<>(item, headers);
 //
 //        ResponseEntity<Item> exchange = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Item.class);
-//        exchange
+//        exchange;
+    }
 
+    public Item getById(String id){
+        return getItems().stream()
+                .filter(item -> item.getId().equals(id))
+                .findAny()
+                .orElse(null);
     }
 }
