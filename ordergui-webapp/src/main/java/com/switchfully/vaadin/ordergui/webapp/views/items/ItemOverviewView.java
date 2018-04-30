@@ -26,7 +26,6 @@ public class ItemOverviewView extends CustomComponent implements View {
     private final Button btnNewItem;
 
     private final Grid grid;
-//    private Table table;
 
     public ItemOverviewView(ItemResource itemResource) {
         this.items = createItemLabel();
@@ -35,37 +34,18 @@ public class ItemOverviewView extends CustomComponent implements View {
         this.btnNewItem = createButtonNewItem();
 
         this.grid = createGrid(itemResource);
-//        this.table = createTable(itemResource);
 
         this.headerLayout = new HorizontalLayout(items, itemFilter, btnFilter, btnNewItem);
         headerLayout.setSpacing(true);
         headerLayout.setSizeFull();
         this.gridLayout = new HorizontalLayout(grid);
-//        this.gridLayout = new HorizontalLayout(table);
         gridLayout.setSizeFull();
         gridLayout.setExpandRatio(grid, 1);
-//        gridLayout.setExpandRatio(table, 1);
         this.mainLayout = new VerticalLayout(headerLayout, gridLayout);
         mainLayout.setSpacing(true);
         mainLayout.setMargin(true);
 
         setCompositionRoot(mainLayout);
-    }
-
-    private Table createTable(ItemResource itemResource) {
-        Table table = new Table("ItemTable");
-        BeanItemContainer<Item> container = new BeanItemContainer<>(Item.class, itemResource.getItems());
-        table.setContainerDataSource(container);
-
-        table.addGeneratedColumn("modify", new Table.ColumnGenerator() {
-            @Override
-            public Component generateCell(final Table source, final Object itemId, final Object columnId) {
-                HorizontalLayout hor = new HorizontalLayout();
-                hor.addComponent(new Button("Edit"));
-                return hor;
-            }
-        });
-        return table;
     }
 
     private Grid createGrid(ItemResource itemResource) {
@@ -83,8 +63,7 @@ public class ItemOverviewView extends CustomComponent implements View {
 
                     @Override
                     public String getValue(com.vaadin.data.Item item, Object itemId, Object propertyId) {
-//                        return "Edit"; // The caption
-                        return "Edit";
+                        return "Edit";// The caption
                     }
 
                     @Override
